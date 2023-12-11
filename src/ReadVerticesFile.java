@@ -3,9 +3,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class ReadFile {
+public class ReadVerticesFile {
 
-    public static void readVerticesFile(String filePath, Vertex[] vertices) {
+    public static void ReadVerticesFromFile(String filePath, Vertex[] vertices) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             int vertexCount = 0;
@@ -29,6 +29,7 @@ public class ReadFile {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        minimalizeCoordinates(vertices);
     }
 
     public static void minimalizeCoordinates(Vertex[] vertices) {
