@@ -19,15 +19,11 @@ public class Graph {
         for (int i = 0; i < Constants.ARRAY_SIZE; i++) {
             adjacencyList.add(new Vector<>());
         }
-        distanceMatrix = new Vector<>(Constants.ARRAY_SIZE);
-        for (int i = 0; i < Constants.ARRAY_SIZE; i++) {
-            distanceMatrix.add(new Vector<>(Constants.ARRAY_SIZE));
-        }
         String filePathForGraph = "E:\\LearnOOP\\adjacencList.txt"; // Địa chỉ file chứa danh sách kề.
         readAdjacencyListFromFile(filePathForGraph);
         String filePath = "E:\\LearnOOP\\Vertices.txt";
         ReadVerticesFile.ReadVerticesFromFile(filePath, coordinatesVertex); // Read x and y of vertices.
-        // UpdatingDistanceMatrix(this);
+        UpdatingDistanceMatrix();
     }
 
     public void readAdjacencyListFromFile(String filePath) { // Input adjacency List from a text
@@ -51,18 +47,24 @@ public class Graph {
         }
     }
 
-    public void UpdatingDistanceMatrix(Graph graph) {
+    public void UpdatingDistanceMatrix() {
+        distanceMatrix = new Vector<>(Constants.ARRAY_SIZE);
+
         for (int i = 0; i < Constants.ARRAY_SIZE; i++) {
+            Vector<Double> row = new Vector<>(Constants.ARRAY_SIZE);
+
             for (int j = 0; j < Constants.ARRAY_SIZE; j++) {
-                graph.distanceMatrix.get(i).set(j, -1.0);
+                row.add(-1.0); // Set tất cả bằng -1 cho mỗi phần tử trong hàng.
             }
+
+            distanceMatrix.add(row);
         }
-        for (int i = 0; i < graph.adjacencyList.size(); i++) {
-            for (int neighbor : graph.adjacencyList.get(i)) {
-                Vertex vertex1 = new Vertex(graph.coordinatesVertex[i].x, graph.coordinatesVertex[i].y);
-                Vertex vertex2 = new Vertex(graph.coordinatesVertex[neighbor].x, graph.coordinatesVertex[neighbor].y);
+        for (int i = 0; i < adjacencyList.size(); i++) {
+            for (int neighbor : adjacencyList.get(i)) {
+                Vertex vertex1 = new Vertex(coordinatesVertex[i].x, coordinatesVertex[i].y);
+                Vertex vertex2 = new Vertex(coordinatesVertex[neighbor].x, coordinatesVertex[neighbor].y);
                 // Now you can use vertex1 and vertex2 as needed
-                graph.distanceMatrix.get(i).set(neighbor, Vertex.Distance(vertex1, vertex2));
+                distanceMatrix.get(i).set(neighbor, Vertex.Distance(vertex1, vertex2));
             }
 
         }
@@ -85,6 +87,7 @@ public class Graph {
         // Read x and y of vertices.
         // Read the file to create adjacencyList
         Graph graph = new Graph(); // Để tạo danh sách cạnh kề.
+
         for (int i = 0; i < graph.adjacencyList.size(); i++) {
             System.out.print(i + " ");
             for (int neighbor : graph.adjacencyList.get(i)) {
@@ -94,6 +97,12 @@ public class Graph {
         }
         for (int i = 0; i < Constants.ARRAY_SIZE; i++) {
             System.out.println(graph.coordinatesVertex[i].x + " " + graph.coordinatesVertex[i].y);
+        }
+        for (int i = 0; i < Constants.ARRAY_SIZE; i++) {
+            for (int j = 0; j < Constants.ARRAY_SIZE; j++) {
+                System.out.print(graph.distanceMatrix.get(i).get(j) + " ");
+            }
+            System.out.println();
         }
     }
 }
