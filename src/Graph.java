@@ -6,12 +6,12 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 public class Graph {
-    private Vector<Vector<Integer>> adjacencyList; // class graph
-                                                   // include an
-                                                   // adjacency
-                                                   // list.
-    private Vertex[] coordinatesVertex = new Vertex[Constants.ARRAY_SIZE];; // Ma trận tọa độ.
-    private Vector<Vector<Double>> distanceMatrix;
+    Vector<Vector<Integer>> adjacencyList; // class graph
+                                           // include an
+                                           // adjacency
+                                           // list.
+    Vertex[] coordinatesVertex = new Vertex[Constants.ARRAY_SIZE];; // Ma trận tọa độ.
+    Vector<Vector<Double>> distanceMatrix;
 
     public Graph() { // constructor creates the adjacency list from its graph.
         adjacencyList = new Vector<>(Constants.ARRAY_SIZE); // array size được lưu ở 1 cái class chỗ
@@ -87,22 +87,8 @@ public class Graph {
         // Read x and y of vertices.
         // Read the file to create adjacencyList
         Graph graph = new Graph(); // Để tạo danh sách cạnh kề.
-
-        for (int i = 0; i < graph.adjacencyList.size(); i++) {
-            System.out.print(i + " ");
-            for (int neighbor : graph.adjacencyList.get(i)) {
-                System.out.print(neighbor + " ");
-            }
-            System.out.println();
-        }
-        for (int i = 0; i < Constants.ARRAY_SIZE; i++) {
-            System.out.println(graph.coordinatesVertex[i].x + " " + graph.coordinatesVertex[i].y);
-        }
-        for (int i = 0; i < Constants.ARRAY_SIZE; i++) {
-            for (int j = 0; j < Constants.ARRAY_SIZE; j++) {
-                System.out.print(graph.distanceMatrix.get(i).get(j) + " ");
-            }
-            System.out.println();
-        }
+        Vertex startPoint = new Vertex(485202, 2323887);
+        int nearestVertex = FindNearestVertex.findNearVertex(graph, startPoint);
+        System.out.println(nearestVertex);
     }
 }
