@@ -1,9 +1,9 @@
 
 public class Vertex {
-    int x;
-    int y;
+    double x;
+    double y;
 
-    Vertex(int x, int y) {
+    Vertex(double x, double y) {
         this.x = x;
         this.y = y;
     }

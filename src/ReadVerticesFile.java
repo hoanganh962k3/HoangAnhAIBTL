@@ -1,14 +1,15 @@
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class ReadVerticesFile {
-
-    public static void ReadVerticesFromFile(String filePath, Vertex[] vertices) {
+    public static Vertex[] readVerticesFromFile(String filePath) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             int vertexCount = 0;
+
+            // Initialize the array with the constant size
+            Vertex[] vertices = new Vertex[Constants.ARRAY_SIZE];
 
             // Read each line from the file until the end of the file is reached
             while ((line = reader.readLine()) != null) {
@@ -18,29 +19,33 @@ public class ReadVerticesFile {
                 // Check if there are exactly two numbers on the line
                 if (numbers.length == 2) {
                     try {
-                        int number1 = Integer.parseInt(numbers[0]);
-                        int number2 = Integer.parseInt(numbers[1]);
+                        double number1 = Double.parseDouble(numbers[0]);
+                        double number2 = Double.parseDouble(numbers[1]);
                         vertices[vertexCount++] = new Vertex(number1, number2);
                     } catch (NumberFormatException e) {
-                        System.err.println("Invalid integer format on line: " + line);
+                        System.err.println("Invalid double format on line: " + line);
                     }
                 }
             }
+
+            return vertices;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        minimalizeCoordinates(vertices);
+
+        return null;
     }
 
-    public static void minimalizeCoordinates(Vertex[] vertices) {
-        for (int i = 0; i < vertices.length; i++) {
-            vertices[i].x = vertices[i].x - 480000;
-            vertices[i].y = vertices[i].y - 2320000;
+    public static void main(String[] args) {
+        // Assuming you have a Vertex class with a constructor that takes two doubles
+        Vertex[] vertices = new Vertex[Constants.ARRAY_SIZE]; // Adjust the array size as needed
+        String filePath = "E:\\\\LearnOOP\\\\Vertices.txt"; // Replace with the actual file path
+        vertices = readVerticesFromFile(filePath);
+        System.out.println("Vertices read from the file:");
+        System.out.println("Vertices read from the file:");
+        for (int i = 0; i < vertices.length && vertices[i] != null; i++) {
+            System.out.println("Vertex " + (i + 1) + ": x = " + vertices[i].x + ", y = " + vertices[i].y);
         }
+        // Do something with the vertices array if needed
     }
-
-}
-
-class Constants {
-    public static final int ARRAY_SIZE = 82;
 }

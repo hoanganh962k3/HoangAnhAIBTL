@@ -12,8 +12,8 @@ public class MapRoad {
     }
 
     int orientation(Vertex p1, Vertex p2, Vertex q) {
-        int x = (p2.y - p1.y) * (q.x - p2.x) - (q.y - p2.y) * (p2.x - p1.x);
-        if (x == 0)
+        double x = (p2.y - p1.y) * (q.x - p2.x) - (q.y - p2.y) * (p2.x - p1.x);
+        if (x == 0.0)
             return 0;
         return x < 0 ? 1 : 2;
     }
@@ -50,5 +50,27 @@ public class MapRoad {
 
     public Vertex getEndVertex() {
         return road.getValue();
+    }
+
+    public static void main(String[] args) {
+        // Creating vertices
+        Vertex vertex1 = new Vertex(1, 2);
+        Vertex vertex2 = new Vertex(3, 6);
+        Vertex vertex3 = new Vertex(5, 10);
+        Vertex vertex4 = new Vertex(6, 12);
+
+        // Creating MapRoad instances
+        MapRoad road1 = new MapRoad(vertex1, vertex2);
+        MapRoad road2 = new MapRoad(vertex3, vertex4);
+
+        // Checking for intersection
+        boolean isIntersecting = road1.checkRoadIntersection(road1, road2);
+
+        // Displaying the result
+        if (isIntersecting) {
+            System.out.println("The roads intersect.");
+        } else {
+            System.out.println("The roads do not intersect.");
+        }
     }
 }
